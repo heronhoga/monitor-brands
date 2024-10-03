@@ -24,14 +24,14 @@
             padding: 10px 20px;
             font-size: 16px;
             color: white;
-            background-color: #007bff; /* Bootstrap primary color */
+            background-color: #007bff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             text-decoration: none;
         }
         .login-button:hover {
-            background-color: #0056b3; /* Darker shade on hover */
+            background-color: #0056b3;
         }
     </style>
 </head>

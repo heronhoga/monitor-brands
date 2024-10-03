@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeControllers; // Ensure to import the HomeController
+use App\Http\Controllers\HomeControllers;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +17,7 @@ use App\Http\Controllers\HomeControllers; // Ensure to import the HomeController
 // Routes for guests (unauthenticated users)
 Route::middleware('guest')->group(function () {
     Route::get('/', [HomeControllers::class, 'index']);
+    Route::get('/login', [HomeControllers::class, 'loginPage'])->name('login');
 });
 
 // Routes for authenticated users
