@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardControllers;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeControllers;
 
@@ -18,11 +19,10 @@ use App\Http\Controllers\HomeControllers;
 Route::middleware('guest')->group(function () {
     Route::get('/', [HomeControllers::class, 'index']);
     Route::get('/login', [HomeControllers::class, 'loginPage'])->name('login');
+    Route::post('/login', [HomeControllers::class, 'login'])->name("login-action");
 });
 
 // Routes for authenticated users
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    });
+    Route::get('/dashboard', [DashboardControllers::class, 'index'])->name('dashboard');
 });

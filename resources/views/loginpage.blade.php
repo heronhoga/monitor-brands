@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,8 +26,29 @@
 <body>
     <div class="login-container">
         <h2 class="text-center">Login</h2>
-        <form action="{{ route('login') }}" method="POST">
+
+        <!-- Display Session Error Message -->
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        <!-- Display Validation Errors -->
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <!-- Login Form -->
+        <form action="{{ route('login-action') }}" method="POST" >
             @csrf
+
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" class="form-control" required>
@@ -39,15 +59,6 @@
             </div>
             <button type="submit" class="btn btn-primary btn-block">Login</button>
         </form>
-        @if ($errors->any())
-            <div class="alert alert-danger mt-2">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
     </div>
 </body>
 </html>
