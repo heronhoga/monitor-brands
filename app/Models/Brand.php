@@ -12,7 +12,7 @@ class Brand extends Model
 
     protected $table = 'brands';
 
-    protected $timestamps = false;
+    public $timestamps = false;
 
     protected $primaryKey = 'id_brand';
 

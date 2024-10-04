@@ -25,4 +25,16 @@ Route::middleware('guest')->group(function () {
 // Routes for authenticated users
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardControllers::class, 'index'])->name('dashboard');
+    Route::get('/logout', [HomeControllers::class, 'logout'])->name('logout');
+
+    //CREATE BRAND ROUTES
+    Route::get('/create-brand', [DashboardControllers::class, 'createBrandIndex'])->name('create-brand');
+    Route::post('/create-brand', [DashboardControllers::class, 'createBrand'])->name('create-brand-action');
+
+    //EDIT BRAND ROUTES
+    Route::get('/edit-brand/{id_brand}', [DashboardControllers::class, 'editBrandIndex'])->name('edit-brand');
+
+    //DELETE BRAND ROUTES
+    Route::delete('/delete-brand/{id_brand}', [DashboardControllers::class, 'deleteBrand'])->name('delete-brand-action');
+
 });

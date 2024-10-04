@@ -14,6 +14,7 @@
             height: 100vh;
             margin: 0;
             background-color: #f4f4f4;
+            font-family: 'Courier New', Courier, monospace;
         }
         h1 {
             color: #333;

@@ -13,6 +13,7 @@
             height: 100vh;
             margin: 0;
             background-color: #f4f4f4;
+            font-family: 'Courier New', Courier, monospace;
         }
         .login-container {
             background-color: white;

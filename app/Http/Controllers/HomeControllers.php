@@ -24,13 +24,20 @@ class HomeControllers extends Controller
         ]);
     
         $user = \App\Models\User::where('username', $request->username)->first();
+
     
         if ($user && $user->password === $request->password) {
-            Auth::login($user); 
+            Auth::login($user);
+            session(['name' => $user->name]); 
             return redirect()->intended('dashboard');
         } else {
             return redirect('login')->with('error', 'Login details are not valid');
         }
+    }
+
+    public function logout() {
+        Auth::logout();
+        return redirect('login');
     }
     
 }
