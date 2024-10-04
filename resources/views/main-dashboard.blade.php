@@ -144,7 +144,7 @@
                 <tbody>
                     @foreach ($brands as $brand)
                     <tr>
-                        <td>{{ $brand->id }}</td>
+                        <td>{{ $brand->id_brand }}</td>
                         <td>{{ $brand->name }}</td>
                         <td>{{ $brand->country }}</td>
                         <td>{{ $brand->id_legal }}</td>

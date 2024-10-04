@@ -53,4 +53,25 @@ class DashboardControllers extends Controller
         return view('brands.edit-brand')
             ->with('brand', $brand);
     }
+
+    public function editBrand(Request $request) {
+        $request->validate([
+            'name' => 'required',
+            'country' => 'required',
+            'establish_date' => 'required',
+        ]);
+    
+        $brand = \App\Models\Brand::where('id_brand', $request->id_brand)->first();
+        if (!$brand) {
+            return redirect()->back()->with('error', 'Brand not found.');
+        }
+    
+        $brand->update([
+            'name' => $request->name,
+            'country' => $request->country,
+            'establish_date' => $request->establish_date
+        ]);
+    
+        return redirect()->intended('dashboard');
+    }
 }

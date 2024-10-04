@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
 
     //EDIT BRAND ROUTES
     Route::get('/edit-brand/{id_brand}', [DashboardControllers::class, 'editBrandIndex'])->name('edit-brand');
+    Route::put('/edit-brand/{id_brand}', [DashboardControllers::class, 'editBrand'])->name('edit-brand-action');
 
     //DELETE BRAND ROUTES
     Route::delete('/delete-brand/{id_brand}', [DashboardControllers::class, 'deleteBrand'])->name('delete-brand-action');

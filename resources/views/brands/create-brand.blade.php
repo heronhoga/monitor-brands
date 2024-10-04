@@ -72,7 +72,6 @@
             <label for="name">Brand Name:</label>
             <input type="text" id="name" name="name" required>
 
-            <!-- Country dropdown -->
             <label for="country">Country:</label>
             <select id="country" name="country" required>
                 <option value="">Select a country</option>
@@ -81,13 +80,16 @@
                 <option value="Canada">Canada</option>
                 <option value="Australia">Australia</option>
                 <option value="Germany">Germany</option>
+                <option value="France">France</option>
+                <option value="India">India</option>
+                <option value="Japan">Japan</option>
+                <option value="China">China</option>
+                <option value="Brazil">Brazil</option>
             </select>
 
-            <!-- Establish Date input -->
             <label for="establish_date">Establish Date:</label>
             <input type="date" id="establish_date" name="establish_date" required>
 
-            <!-- Submit button -->
             <button type="submit">Create Brand</button>
         </form>
     </div>
