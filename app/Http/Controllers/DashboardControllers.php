@@ -150,4 +150,42 @@ class DashboardControllers extends Controller
         $unit->delete();
         return redirect()->intended('dashboard-units');
     }
+
+    //API
+    public function getBrandsData(Request $request)
+    {
+        $query = \App\Models\Brand::query();
+        if ($request->has('name')) {
+            $query->where('name', 'like', '%' . $request->query('name') . '%');
+        }
+        $brands = $query->get();
+        return response()->json($brands);
+    }
+
+    public function getUnitsData(Request $request)
+    {
+        $query = \App\Models\Unit::select('units.*', 'brands.name as brand_name')
+            ->join('brands', 'units.id_brand', '=', 'brands.id_brand');
+        if ($request->has('brand_name')) {
+            $query->where('brands.name', 'like', '%' . $request->query('brand_name') . '%');
+        }
+        if ($request->has('refresh_rate')) {
+            $query->where('units.refresh_rate', 'like', '%' . $request->query('refresh_rate') . '%');
+        }
+        $units = $query->get();
+        return response()->json($units);
+    }
+
+    public function getSpecificBrandData($id_brand) {
+        $brand = \App\Models\Brand::where('id_brand', $id_brand)->first();
+        return response()->json($brand);
+    }
+
+    public function getSpecificUnitData($id_unit) {
+        $unit = \App\Models\Unit::where('id_unit', $id_unit)->first();
+        return response()->json($unit);
+    }
+
+
+
 }

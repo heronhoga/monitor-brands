@@ -20,6 +20,12 @@ Route::middleware('guest')->group(function () {
     Route::get('/', [HomeControllers::class, 'index']);
     Route::get('/login', [HomeControllers::class, 'loginPage'])->name('login');
     Route::post('/login', [HomeControllers::class, 'login'])->name("login-action");
+
+    //API
+    Route::get('/api/brands', [DashboardControllers::class, 'getBrandsData']);
+    Route::get('/api/units', [DashboardControllers::class, 'getUnitsData']);
+    Route::get('/api/brands/{id_brand}', [DashboardControllers::class, 'getSpecificBrandData']);
+    Route::get('/api/units/{id_unit}', [DashboardControllers::class, 'getSpecificUnitData']);
 });
 
 // Routes for authenticated users
