@@ -70,7 +70,7 @@
             <h1>Create New Unit</h1>
             <form action="{{ route('create-unit-action') }}" method="post">
                 @csrf
-                
+
                 <select id="id_brand" name="id_brand" required>
                     <option value="">Select a brand</option>
                     @foreach ($brands as $brand)
@@ -114,7 +114,7 @@
                     required
                 />
 
-                <button type="submit">Create Product</button>
+                <button type="submit">Create Unit</button>
             </form>
         </div>
     </body>

@@ -44,6 +44,10 @@ Route::middleware('auth')->group(function () {
     //CREATE UNIT ROUTES
     Route::get('/create-unit', [DashboardControllers::class, 'createUnitIndex'])->name('create-unit');
     Route::post('/create-unit', [DashboardControllers::class, 'createUnit'])->name('create-unit-action');
+
+    //EDIT UNIT ROUTES
+    Route::get('/edit-unit/{id_unit}', [DashboardControllers::class, 'editUnitIndex'])->name('edit-unit');
+    Route::put('/edit-unit/{id_unit}', [DashboardControllers::class, 'editUnit'])->name('edit-unit-action');
     
     //DELETE UNIT ROUTES
     Route::delete('/delete-unit/{id_unit}', [DashboardControllers::class, 'deleteUnit'])->name('delete-unit-action');

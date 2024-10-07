@@ -109,6 +109,39 @@ class DashboardControllers extends Controller
         return redirect()->intended('dashboard-units');
     }
 
+    public function editUnitIndex(Request $request) {
+        $unit = \App\Models\Unit::where('id_unit', $request->id_unit)->first();
+        $brands = \App\Models\Brand::all();
+        return view('units.edit-unit')
+            ->with('unit', $unit)
+            ->with('brands', $brands);
+    }
+
+    public function editUnit(Request $request) {
+        $request->validate([
+            'id_brand' => 'required',
+            'screen_res' => 'required',
+            'refresh_rate' => 'required',
+            'screen_ratio' => 'required',
+            'price' => 'required',
+        ]);
+
+        $unit = \App\Models\Unit::where('id_unit', $request->id_unit)->first();
+        if (!$unit) {
+            return redirect()->back()->with('error', 'Unit not found.');
+        }
+    
+        $unit->update([
+            'id_brand' => $request->id_brand,
+            'screen_res' => $request->screen_res,
+            'refresh_rate' => $request->refresh_rate,
+            'screen_ratio' => $request->screen_ratio,
+            'price' => $request->price
+        ]);
+    
+        return redirect()->intended('dashboard-units');
+    }
+
     public function deleteUnit($id_unit) {
         $unit = \App\Models\Unit::where('id_unit', $id_unit)->first();
         if (!$unit) {
