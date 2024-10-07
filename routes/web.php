@@ -38,4 +38,10 @@ Route::middleware('auth')->group(function () {
     //DELETE BRAND ROUTES
     Route::delete('/delete-brand/{id_brand}', [DashboardControllers::class, 'deleteBrand'])->name('delete-brand-action');
 
+    //UNIT ROUTES
+    Route::get('/dashboard-units', [DashboardControllers::class, 'indexUnit'])->name('dashboard-units');
+    
+    //DELETE UNIT ROUTES
+    Route::delete('/delete-unit/{id_unit}', [DashboardControllers::class, 'deleteUnit'])->name('delete-unit-action');
+
 });

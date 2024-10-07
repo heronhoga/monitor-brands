@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 
 class DashboardControllers extends Controller
 {
+    // Main dashboard
     public function index() {
         $brands = \App\Models\Brand::all();
         return view('main-dashboard')
@@ -73,5 +74,21 @@ class DashboardControllers extends Controller
         ]);
     
         return redirect()->intended('dashboard');
+    }
+
+    // Unit dashboard
+    public function indexUnit() {
+        $units = \App\Models\Unit::select('units.*', 'brands.name as brand_name')->join('brands', 'units.id_brand', '=', 'brands.id_brand')->get();
+        return view('units.main-units')
+            ->with('units', $units);
+    }
+
+    public function deleteUnit($id_unit) {
+        $unit = \App\Models\Unit::where('id_unit', $id_unit)->first();
+        if (!$unit) {
+            return redirect()->back()->with('error', 'Unit not found.');
+        }
+        $unit->delete();
+        return redirect()->intended('dashboard-units');
     }
 }

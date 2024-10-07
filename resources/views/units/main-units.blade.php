@@ -50,7 +50,7 @@
                 text-align: center;
             }
 
-            #create-brand-btn {
+            #create-unit-btn {
                 display: inline-block;
                 margin-bottom: 20px;
                 padding: 10px 20px;
@@ -60,7 +60,7 @@
                 border-radius: 5px;
             }
 
-            #create-brand-btn:hover {
+            #create-unit-btn:hover {
                 background-color: #0056b3;
             }
 
@@ -129,42 +129,46 @@
         </div>
 
         <div id="table">
-            <a href="/create-brand" id="create-brand-btn">Create New Brand</a>
+            <a href="/create-unit" id="create-unit-btn">Create New Unit</a>
             <table>
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Brand Name</th>
-                        <th>Country</th>
-                        <th>ID Legal</th>
-                        <th>Establish Date</th>
+                        <th>Brand</th>
+                        <th>Screen Resolution</th>
+                        <th>Refresh Rate</th>
+                        <th>Screen Ratio</th>
+                        <th>Price</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($brands as $brand)
+                    @foreach ($units as $unit)
                     <tr>
-                        <td>{{ $brand->id_brand }}</td>
-                        <td>{{ $brand->name }}</td>
-                        <td>{{ $brand->country }}</td>
-                        <td>{{ $brand->id_legal }}</td>
-                        <td>{{ $brand->establish_date }}</td>
+                        <td>{{ $unit->id_unit }}</td>
+                        <td>{{ $unit->brand_name }}</td>
+                        <td>{{ $unit->screen_res }}</td>
+                        <td>{{ $unit->refresh_rate }} Hz</td>
+                        <td>{{ $unit->screen_ratio }}</td>
+                        <td>
+                            {{ 'Rp ' . number_format($unit->price, 0, ',', '.') }}
+                        </td>
                         <td>
                             <a
-                                href="/edit-brand/{{ $brand->id_brand }}"
+                                href="/edit-unit/{{ $unit->id_unit }}"
                                 class="edit-btn"
                                 >Edit</a
                             >
                             <form
-                                action="{{ route('delete-brand-action', ['id_brand' => $brand->id_brand]) }}"
                                 method="POST"
                                 style="display: inline-block"
+                                action="{{ route('delete-unit-action', ['id_unit' => $unit->id_unit]) }}"
                             >
                                 @csrf @method('DELETE')
                                 <button
                                     type="submit"
                                     class="delete-btn"
-                                    onclick="return confirm('Are you sure you want to delete this brand?')"
+                                    onclick="return confirm('Are you sure you want to delete this unit?')"
                                 >
                                     Delete
                                 </button>
@@ -175,8 +179,8 @@
                 </tbody>
             </table>
 
-            @if($brands->isEmpty())
-            <p>No brands found.</p>
+            @if($units->isEmpty())
+            <p>No units found.</p>
             @endif
         </div>
     </body>

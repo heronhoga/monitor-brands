@@ -13,7 +13,7 @@ class Unit extends Model
 
     protected $primaryKey = 'id_unit';
 
-    protected $timestamps = false;
+    public $timestamps = false;
 
     protected $fillable = [
         'screen_res',
