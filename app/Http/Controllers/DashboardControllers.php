@@ -83,6 +83,32 @@ class DashboardControllers extends Controller
             ->with('units', $units);
     }
 
+    public function createUnitIndex() {
+        $brands = \App\Models\Brand::all();
+        return view('units.create-unit')
+            ->with('brands', $brands);
+    }
+
+    public function createUnit(Request $request) {
+        $request->validate([
+            'id_brand' => 'required',
+            'screen_res' => 'required',
+            'refresh_rate' => 'required',
+            'screen_ratio' => 'required',
+            'price' => 'required',
+        ]);
+    
+        \App\Models\Unit::create([
+            'id_brand' => $request->id_brand,
+            'screen_res' => $request->screen_res,
+            'refresh_rate' => $request->refresh_rate,
+            'screen_ratio' => $request->screen_ratio,
+            'price' => $request->price
+        ]);
+    
+        return redirect()->intended('dashboard-units');
+    }
+
     public function deleteUnit($id_unit) {
         $unit = \App\Models\Unit::where('id_unit', $id_unit)->first();
         if (!$unit) {

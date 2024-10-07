@@ -40,6 +40,10 @@ Route::middleware('auth')->group(function () {
 
     //UNIT ROUTES
     Route::get('/dashboard-units', [DashboardControllers::class, 'indexUnit'])->name('dashboard-units');
+
+    //CREATE UNIT ROUTES
+    Route::get('/create-unit', [DashboardControllers::class, 'createUnitIndex'])->name('create-unit');
+    Route::post('/create-unit', [DashboardControllers::class, 'createUnit'])->name('create-unit-action');
     
     //DELETE UNIT ROUTES
     Route::delete('/delete-unit/{id_unit}', [DashboardControllers::class, 'deleteUnit'])->name('delete-unit-action');

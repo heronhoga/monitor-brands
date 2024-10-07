@@ -16,6 +16,7 @@ class Unit extends Model
     public $timestamps = false;
 
     protected $fillable = [
+        'id_brand',
         'screen_res',
         'refresh_rate',
         'screen_ratio',
