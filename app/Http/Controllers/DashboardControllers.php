@@ -26,7 +26,6 @@ class DashboardControllers extends Controller
             'establish_date' => 'required',
         ]);
     
-        // Generate a random alphanumeric string with a custom pattern
         $idLegal = Str::random(8) . '-' . Str::random(5) . '-' . strtoupper(Str::random(3)) . '-' . strtoupper(Str::random(6)) . rand(1000, 9999);
     
         \App\Models\Brand::create([
@@ -35,6 +34,8 @@ class DashboardControllers extends Controller
             'id_legal' => $idLegal,
             'establish_date' => $request->establish_date
         ]);
+
+        
     
         return redirect()->intended('dashboard');
     }
@@ -154,38 +155,80 @@ class DashboardControllers extends Controller
     //API
     public function getBrandsData(Request $request)
     {
-        $query = \App\Models\Brand::query();
-        if ($request->has('name')) {
-            $query->where('name', 'like', '%' . $request->query('name') . '%');
+        try {
+            $query = \App\Models\Brand::query(); 
+            if ($request->has('name')) {
+                $query->where('name', 'like', '%' . $request->query('name') . '%');
+            }
+        
+            $brands = $query->get();
+            if ($brands->isEmpty()) {
+                return response()->json(['message' => 'No brands found'], 404);
+            }
+        
+            return response()->json($brands);
+        } catch (\Exception $e) {
+            dd($e);
+            return response()->json(['message' => 'An error occurred while fetching brand data'], 500);
         }
-        $brands = $query->get();
-        return response()->json($brands);
     }
-
+    
     public function getUnitsData(Request $request)
     {
-        $query = \App\Models\Unit::select('units.*', 'brands.name as brand_name')
-            ->join('brands', 'units.id_brand', '=', 'brands.id_brand');
-        if ($request->has('brand_name')) {
-            $query->where('brands.name', 'like', '%' . $request->query('brand_name') . '%');
+        try {
+            $query = \App\Models\Unit::select('units.*', 'brands.name as brand_name')
+                ->join('brands', 'units.id_brand', '=', 'brands.id_brand');
+        
+            if ($request->has('brand_name')) {
+                $query->where('brands.name', 'like', '%' . $request->query('brand_name') . '%');
+            }
+        
+            if ($request->has('refresh_rate')) {
+                $query->where('units.refresh_rate', 'like', '%' . $request->query('refresh_rate') . '%');
+            }
+        
+            $units = $query->get();
+        
+            if ($units->isEmpty()) {
+                return response()->json(['message' => 'No units found'], 404);
+            }
+        
+            return response()->json($units);
+        } catch (\Exception $e) {
+            dd($e);
+            return response()->json(['message' => 'An error occurred while fetching unit data'], 500);
         }
-        if ($request->has('refresh_rate')) {
-            $query->where('units.refresh_rate', 'like', '%' . $request->query('refresh_rate') . '%');
+    }
+    
+    public function getSpecificBrandData($id_brand)
+    {
+        try {
+            $brand = \App\Models\Brand::where('id_brand', $id_brand)->first();
+            if (!$brand) {
+                return response()->json(['message' => 'Brand not found'], 404);
+            }
+            return response()->json($brand);
+        } catch (\Exception $e) {
+            dd($e);
+            return response()->json(['message' => 'An error occurred while fetching specific brand data'], 500);
         }
-        $units = $query->get();
-        return response()->json($units);
     }
-
-    public function getSpecificBrandData($id_brand) {
-        $brand = \App\Models\Brand::where('id_brand', $id_brand)->first();
-        return response()->json($brand);
+    
+    public function getSpecificUnitData($id_unit)
+    {
+        try {
+            $unit = \App\Models\Unit::where('id_unit', $id_unit)->first();
+        
+            if (!$unit) {
+                return response()->json(['message' => 'Unit not found'], 404);
+            }
+        
+            return response()->json($unit);
+        } catch (\Exception $e) {
+            dd($e);
+            return response()->json(['message' => 'An error occurred while fetching specific unit data'], 500);
+        }
     }
-
-    public function getSpecificUnitData($id_unit) {
-        $unit = \App\Models\Unit::where('id_unit', $id_unit)->first();
-        return response()->json($unit);
-    }
-
-
+    
 
 }
